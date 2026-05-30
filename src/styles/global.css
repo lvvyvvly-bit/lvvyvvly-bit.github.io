@@ -1,0 +1,207 @@
+/* ===== Global Reset ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Custom Cursor ===== */
+body {
+  cursor: none;
+  background-color: #f9f9f7;
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  color: #1a1c1b;
+  -webkit-font-smoothing: antialiased;
+}
+
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  animation: rotateCursor 10s linear infinite;
+  transition: transform 0.15s ease-out;
+}
+
+#custom-cursor.scaled {
+  transform: translate(-50%, -50%) scale(1.5);
+  animation: rotateCursor 10s linear infinite;
+}
+
+@keyframes rotateCursor {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ===== CRT Turn-On Effect ===== */
+#crt-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 10000;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.crt-scanline {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+  0%   { transform: translateY(-50vh); }
+  100% { transform: translateY(50vh); }
+}
+
+.crt-flicker {
+  animation: crtTurnOn 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes crtTurnOn {
+  0%   { opacity: 1; transform: scaleY(0.001) scaleX(0); }
+  30%  { opacity: 1; transform: scaleY(0.001) scaleX(1); }
+  60%  { opacity: 1; transform: scaleY(1) scaleX(1); filter: brightness(2); }
+  100% { opacity: 0; transform: scaleY(1) scaleX(1); filter: brightness(1); }
+}
+
+/* ===== Page Transition ===== */
+.page-fade-enter {
+  opacity: 0;
+}
+.page-fade-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+.page-fade-exit {
+  opacity: 1;
+}
+.page-fade-exit-active {
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+
+/* ===== Ambient Glow (Home) ===== */
+.bg-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(232, 200, 74, 0.08) 0%, rgba(249, 249, 247, 0) 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== Slow-Spin (Works) ===== */
+@keyframes slow-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.animate-slow-spin {
+  animation: slow-spin 10s linear infinite;
+}
+
+/* ===== Material Symbols ===== */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* ===== CircularText page overrides (do not edit Circular_text.tsx) ===== */
+.circular-text.home-circular-text,
+.circular-text.about-circular-text,
+.circular-text.works-circular-text {
+  color: #705d00;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+}
+
+.circular-text.home-circular-text span,
+.circular-text.about-circular-text span,
+.circular-text.works-circular-text span {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.circular-text-wrap {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-text-wrap__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.circular-text-wrap__center--avatar {
+  width: 96px;
+  height: 96px;
+}
+
+.home-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #E8E4DF;
+  box-shadow: 0 4px 12px rgba(26, 26, 26, 0.08);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-avatar__fallback {
+  display: none;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.home-avatar__fallback--visible {
+  display: block;
+}
+
+.circular-text-wrap__center--monogram {
+  width: 56px;
+  height: 56px;
+}
+
+/* ===== Home hero visibility ===== */
+.home-hero {
+  opacity: 0;
+  animation: homeFadeIn 400ms ease-in 1.2s forwards;
+}
+
+@keyframes homeFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
